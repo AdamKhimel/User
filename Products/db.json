@@ -1,0 +1,22 @@
+{
+  "Products": [
+    {
+      "dis": "lightswitch",
+      "cat": "elctronics",
+      "price": "25",
+      "id": 1
+    },
+    {
+      "dis": "mouse",
+      "cat": "computer",
+      "price": "50",
+      "id": 2
+    },
+    {
+      "dis": "keyboard",
+      "cat": "computer",
+      "price": "100",
+      "id": 3
+    }
+  ]
+}

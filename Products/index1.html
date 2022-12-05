@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color:goldenrod">
+    <div style="color: navy">Description<input style="background-color: silver" id="sdis"></div><br>
+    <div style="color: dimgray" >Category<input style="background-color: bisque" id="scat"></div><br>
+    <div style="color: slategrey"> Price<input style="background-color: lightcyan" id="sprice"> </div<br>
+        <br><br><button  style="color: rgb(0, 156, 0)"onclick="addData()">Add Data</button><br><br><br>
+    <div id="display"></div>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+        const MY_SERVER = 'http://localhost:3000/Products/'
+        const loadData = async () => {
+            const res = await axios.get(MY_SERVER)
+            display.innerHTML = res.data.map(Prod => `
+            <button onclick="delProd(${Prod.id})">${Prod.id}</button><br>
+            <button onclick="updProd(${Prod.id})">UPDATE</button><br>
+            <div style="color: white"><br>
+            Discription: ${Prod.dis}
+            <br> Category: ${Prod.cat} <br>Price: ${Prod.price} NIS
+            </div><br>
+        `).join('')
+        }
+
+        loadData()
+
+        // Simple DELETE request with axios
+        const delProd=(id)=>{
+            axios.delete(MY_SERVER + id).then ((res) =>console.log(res.data))
+     
+        }
+
+
+        // post (Create)
+
+        const addData = (id) => {
+            axios.post(MY_SERVER, { dis: sdis.value, cat: scat.value, price: sprice.value }).then((res) => console.log(res.data))
+       
+        }
+        // PUT (UPDATE)
+
+        const updProd = async(id) => {
+            await axios.put(MY_SERVER+id, { dis: sdis.value, cat: scat.value, price: sprice.value  }).then((res) )
+            loadData()
+        }
+    
+    </script>
+</body>
+
+</html>

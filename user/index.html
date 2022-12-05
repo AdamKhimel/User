@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+</head>
+
+<body style="background-color:goldenrod">
+    <div style="color: navy">Username<input style="background-color: silver" id="username"></div><br>
+    <div style="color: dimgray" >Email<input style="background-color: bisque" id="mail"></div><br>
+        <br><br><button  style="color: rgb(0, 156, 0)"onclick="addData()">Add Data</button><br><br><br>
+    <div id="display"></div>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+        // const MY_SERVER = 'http://localhost:3000/'
+        const MY_SERVER = 'https://jsonplaceholder.typicode.com/users/'
+        const loadData = async () => {
+            const res = await axios.get(MY_SERVER)
+            display.innerHTML = res.data.map(User => `
+            <button onclick="delUser(${User.id})">${User.id}</button><br>
+            <button onclick="updUser(${User.id})">UPDATE</button><br>
+            <div style="color: white"><br>
+            Username: ${User.username}
+            <br> Email: ${User.email} <br>
+            </div><br>
+        `).join('')
+        console.log(res.data)
+    
+        }
+
+        loadData()
+
+        // Simple DELETE request with axios
+        const delUser=(id)=>{
+            console.log(id)
+            axios.delete(MY_SERVER + id).then ((res) =>console.log(res.data))
+     
+        }
+
+
+        // post (Create)
+
+        const addData = (id) => {
+            axios.post(MY_SERVER, { Username: username.value, Email: mail.value }).then((res) => console.log(res.data))
+       
+        }
+        // PUT (UPDATE)
+
+        const updUser = async(id) => {
+            await axios.put(MY_SERVER+id, { Username: username.value, Email: mail.value})
+            loadData()
+        }
+    
+    </script>
+</body>
+
+</html>
